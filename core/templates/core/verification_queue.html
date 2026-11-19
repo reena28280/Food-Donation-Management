@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Organization Verification | NourishLoop{% endblock %}
+{% block content %}
+<section class="page-shell staff-shell"><div class="page-heading"><span class="eyebrow">Staff review</span><h1>Pending organizations</h1><p>Review donor and receiver details before enabling restricted actions.</p></div>
+    {% if profiles %}<div class="staff-table-wrap"><table class="staff-table"><thead><tr><th>Organization / member</th><th>Role</th><th>Organization type</th><th>Phone</th><th>City</th><th>Address</th><th>Decision</th></tr></thead><tbody>
+    {% for profile in profiles %}<tr><td><strong>{{ profile.organization_name|default:profile.user.get_full_name|default:profile.user.username }}</strong><small>{{ profile.user.email }}</small></td><td>{{ profile.get_role_display }}</td><td>{{ profile.get_organization_type_display }}</td><td>{{ profile.phone }}</td><td>{{ profile.city }}</td><td>{{ profile.address }}</td><td><div class="staff-row-actions"><form method="post" action="{% url 'staff_verify_profile' profile.pk 'approve' %}">{% csrf_token %}<button class="button button-dark" type="submit">Approve</button></form><form method="post" action="{% url 'staff_verify_profile' profile.pk 'reject' %}">{% csrf_token %}<button class="button button-outline" type="submit">Reject</button></form></div></td></tr>{% endfor %}
+    </tbody></table></div>{% else %}<div class="empty-state">No pending donor or receiver profiles.</div>{% endif %}
+    <a class="text-link staff-back" href="{% url 'staff_dashboard' %}">← Back to staff dashboard</a>
+</section>
+{% endblock %}

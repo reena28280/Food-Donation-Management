@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}{{ heading }} | NourishLoop{% endblock %}
+{% block content %}
+<section class="page-shell narrow-shell donation-form-page">
+	<div class="page-heading"><span class="eyebrow">Donor workspace</span><h1>{{ heading }}</h1><p>Share accurate food, safety, and collection details so receivers can plan a safe pickup.</p></div>
+	<form method="post" enctype="multipart/form-data" class="form-panel donation-form">{% csrf_token %}
+		{% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+		<div class="field-grid">
+			{% for field in form %}<div class="field {% if field.name == 'description' or field.name == 'image' or field.name == 'pickup_address' or field.name == 'allergens' or field.name == 'storage_details' %}field-wide{% endif %}">
+				{% if field.field.widget.input_type == 'checkbox' %}<label class="check-field">{{ field }}<span>{{ field.label }}</span></label>
+				{% else %}<label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% endif %}
+				{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+				{% if field.name == 'image' %}<small>Optional. JPEG, PNG, or WebP, up to 5 MB.</small>{% endif %}
+				{% for error in field.errors %}<small class="error" role="alert">{{ error }}</small>{% endfor %}
+			</div>{% endfor %}
+		</div>
+		<div class="donation-form-actions"><button class="button button-dark" type="submit">{% if donation %}Save changes{% else %}Publish listing{% endif %} <span aria-hidden="true">↗</span></button><a class="button button-outline" href="{% if donation %}{% url 'donation_detail' donation.pk %}{% else %}{% url 'donation_list' %}?mine=1{% endif %}">Cancel</a></div>
+	</form>
+</section>
+{% endblock %}

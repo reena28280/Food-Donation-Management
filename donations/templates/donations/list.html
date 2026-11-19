@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}{% if mine %}Your listings{% else %}Find food{% endif %} | NourishLoop{% endblock %}
+{% block content %}
+<section class="page-shell">
+    <div class="page-heading heading-row"><div><span class="eyebrow">{{ user_profile.city|default:'Community food exchange' }}</span><h1>{% if mine %}Your food listings{% else %}Find food nearby{% endif %}</h1><p>{% if mine %}Manage your offers and follow incoming requests.{% else %}Search fresh community food offers and find a good fit.{% endif %}</p></div>{% if user_profile.role == 'DONOR' and user_profile.verification_status == 'APPROVED' %}<a class="button button-dark" href="{% url 'donation_create' %}">＋ Share food</a>{% endif %}</div>
+    {% if not mine %}<form method="get" class="search-bar find-food-filters">
+        <label class="search-control search-wide"><span>Food name</span><input name="q" value="{{ request.GET.q }}" placeholder="Search meals or ingredients"></label>
+        <label class="search-control"><span>Category</span><select name="category"><option value="">All categories</option>{% for category in categories %}<option value="{{ category.pk }}" {% if selected_category == category.pk|stringformat:'s' %}selected{% endif %}>{{ category.category_name }}</option>{% endfor %}</select></label>
+        <label class="search-control"><span>City</span><input name="city" value="{{ request.GET.city }}" placeholder="Any city"></label>
+        <label class="search-control"><span>Food type</span><select name="food_type"><option value="">All food types</option>{% for value,label in food_types %}<option value="{{ value }}" {% if request.GET.food_type == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+        <label class="search-control"><span>Sort by</span><select name="sort"><option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest first</option><option value="pickup" {% if selected_sort == 'pickup' %}selected{% endif %}>Pickup deadline</option></select></label>
+        <div class="filter-actions"><button class="button button-dark" type="submit">Search food</button><a class="filter-reset" href="{% url 'donation_list' %}">Clear</a></div>
+    </form>{% endif %}
+    {% if donations %}<p class="listing-count">{{ page_obj.paginator.count }} {% if mine %}listing{% else %}food donation{% endif %}{{ page_obj.paginator.count|pluralize }}</p><div class="listing-grid">{% for donation in donations %}<article class="food-card">
+        {% if donation.image %}<img class="food-photo" src="{{ donation.image.url }}" alt="{{ donation.title }}">{% else %}<div class="food-photo food-placeholder"><span>{{ donation.get_food_type_display }}</span><strong>{{ donation.title|slice:':1' }}</strong></div>{% endif %}
+        <div class="food-content">
+            <div class="food-card-top"><span class="status-pill status-{% if donation.is_expired %}expired{% else %}{{ donation.status|lower }}{% endif %}">{% if donation.is_expired %}Expired{% else %}{{ donation.get_status_display }}{% endif %}</span><span>{{ donation.get_food_type_display }}</span></div>
+            <h2><a href="{% url 'donation_detail' donation.pk %}">{{ donation.title }}</a></h2>
+            <p>{{ donation.description|truncatewords:16 }}</p>
+            {% if donation.is_expired %}<p class="inline-callout">Expired — unavailable for pickup or new requests.</p>{% endif %}
+            <div class="food-meta"><span>{{ donation.category.category_name|default:'Food donation' }}</span><span>{{ donation.remaining_servings }} servings left</span></div>
+            <div class="food-meta food-donor-meta"><span>{{ donation.donor_organization|default:donation.donor.get_full_name|default:donation.donor.username }}</span><span>{{ donation.city }}</span></div>
+            <div class="food-deadline">Pickup by {{ donation.pickup_deadline|date:'M j, Y · g:i A' }}</div>
+            {% if mine %}<div class="donor-card-actions">{% if donation.status == 'AVAILABLE' and donation.reserved_servings == 0 %}<a class="button button-outline" href="{% url 'donation_edit' donation.pk %}">Edit listing</a>{% endif %}{% if donation.status != 'COLLECTED' and donation.status != 'CANCELLED' %}<form method="post" action="{% url 'donation_cancel' donation.pk %}">{% csrf_token %}<button class="button button-outline" type="submit">Close donation</button></form>{% endif %}</div>{% else %}<a class="text-link" href="{% url 'donation_detail' donation.pk %}">View food details <span aria-hidden="true">↗</span></a>{% endif %}
+        </div>
+    </article>{% endfor %}</div>
+    {% if page_obj.has_other_pages %}<nav class="food-pagination" aria-label="Food listing pages"><ul class="pagination">
+        {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?{% if query_params %}{{ query_params }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Previous page">Previous</a></li>{% else %}<li class="page-item disabled"><span class="page-link">Previous</span></li>{% endif %}
+        {% for page_number in page_obj.paginator.page_range %}{% if page_number == page_obj.number %}<li class="page-item active"><span class="page-link">{{ page_number }}</span></li>{% elif page_number >= page_obj.number|add:'-2' and page_number <= page_obj.number|add:'2' %}<li class="page-item"><a class="page-link" href="?{% if query_params %}{{ query_params }}&amp;{% endif %}page={{ page_number }}">{{ page_number }}</a></li>{% endif %}{% endfor %}
+        {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?{% if query_params %}{{ query_params }}&amp;{% endif %}page={{ page_obj.next_page_number }}" aria-label="Next page">Next</a></li>{% else %}<li class="page-item disabled"><span class="page-link">Next</span></li>{% endif %}
+    </ul></nav>{% endif %}
+    {% else %}<div class="empty-state"><strong>{% if mine %}You have no food listings yet.{% else %}No available food matches those filters.{% endif %}</strong><p>{% if mine %}Share a donation to get your food into the loop.{% else %}Try another search or clear the filters to see all available food.{% endif %}</p>{% if mine %}<a class="button button-dark" href="{% url 'donation_create' %}">Share food</a>{% else %}<a class="button button-outline" href="{% url 'donation_list' %}">Clear filters</a>{% endif %}</div>{% endif %}
+</section>
+{% endblock %}

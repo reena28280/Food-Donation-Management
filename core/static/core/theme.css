@@ -1,0 +1,59 @@
+:root{
+    --theme-canvas:#e8f0e7;
+    --theme-sage:#dce9dc;
+    --theme-mint:#e4efe3;
+    --theme-ivory:#fffaf0;
+    --theme-warm:#f2eadc;
+    --theme-border:#cbd9cb;
+    --theme-forest:#174a3b;
+}
+
+html,body{background:var(--theme-canvas)}
+body{background:var(--theme-canvas)}
+body>main{background:var(--theme-canvas)}
+.topbar{background:var(--theme-sage);border-color:var(--theme-border)}
+.site-footer{background:#d6e4d5;border-color:#c3d4c2;color:#43594c}
+.footer-brand{color:var(--theme-forest)}
+.page-shell{background:var(--theme-canvas)}
+.form-panel,.action-tile,.detail-aside,.request-card,.food-card,.notification-item,.staff-table-wrap{background:var(--theme-ivory);border-color:var(--theme-border)}
+.empty-state{background:#f5f6ec;border-color:#bdceb9}
+.search-bar,.search-control input,.search-control select{background:#fffdf7;border-color:var(--theme-border)}
+.food-content{background:var(--theme-ivory)}
+.donation-form{background:#f6f7ed;border-color:var(--theme-border)}
+.donation-form .field input,.donation-form .field select,.donation-form .field textarea{background:#fffdf7;border-color:#bfcebf}
+.auth-page .form-panel{border-color:#c8d8c6;border-top-color:var(--theme-forest);background:linear-gradient(145deg,#e1edde 0%,#edf3e6 100%)}
+.auth-page .field input,.auth-page .field select,.auth-page .field textarea{background:#fffdf7;border-color:#bdcebd}
+.logout-page{background:var(--theme-canvas)}
+.dashboard-stats>div,.dashboard-task,.staff-management-links>a{background:var(--theme-ivory);border-color:var(--theme-border)}
+.staff-table th{background:#e2ecdf}
+.notification-item.unread{background:#f0f5e9}
+.home-body{background:var(--theme-canvas)}
+.home-body .home-nav-wrap,.home-body .home-navbar{background:var(--theme-sage);border-color:var(--theme-border)}
+.home-body .home-hero{background-color:#e3eee1;background-image:linear-gradient(90deg,rgba(232,240,231,.93) 0%,rgba(232,240,231,.88) 46%,rgba(232,240,231,.68) 100%),url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=2000&q=85');background-size:cover;background-position:center}
+.home-body .partners-section,.home-body .about-section{background:#e3eee1}
+.home-body .how-section,.home-body .featured-section{background:var(--theme-ivory)}
+.home-body .home-join,.home-body .home-intro{background:#e0eade}
+.home-body .home-steps{background:#e0eade}
+.home-body .mini-listings article{background:transparent}
+.home-body .mini-listings{border-color:var(--theme-border)}
+.home-body .contact-section,.home-body .home-footer{background:var(--theme-forest)}
+.home-body .hero-image-label,.home-body .food-feature{background:var(--theme-ivory)}
+.home-body .no-featured{background:#f1f5e9;border-color:var(--theme-border)}
+.info-hero,.contact-page-hero{background:#e3eee1}
+.about-problem,.process-overview,.contact-form-section{background:var(--theme-ivory)}
+.purpose-section,.handoff-section{background:#e2ecdf}
+.purpose-card{background:var(--theme-ivory);border-color:var(--theme-border)}
+.purpose-card-highlight,.process-hero,.contact-aside{background:var(--theme-forest)}
+.page-cta{background:#dce9dc}
+.role-guide{background:var(--theme-ivory);border-color:var(--theme-border)}
+.role-guide-featured{background:#eff4e8}
+.approval-note{background:#edf3e7}
+.contact-form{background:#f0f4e8;border-color:var(--theme-border)}
+.contact-form input,.contact-form textarea{background:#fffdf7;border-color:#bdcebd}
+.home-hero .hero-image-frame,.about-photo,.info-hero-image{background:#d2e3d1}
+body.home-body{background:var(--theme-canvas)!important}
+
+@media(max-width:760px){
+    .topbar{background:var(--theme-sage)}
+    .main-nav{background:transparent}
+}

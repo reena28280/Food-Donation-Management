@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Log in | NourishLoop{% endblock %}
+{% block content %}
+<section class="form-page compact-form auth-page login-page">
+    <div class="form-intro"><span class="eyebrow">Welcome back</span><h1>Good to see you.</h1><p>Pick up where your community needs you.</p></div>
+    <form method="post" class="form-panel">{% csrf_token %}
+        {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+        {% for field in form %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<small class="error">{{ error }}</small>{% endfor %}</div>{% endfor %}
+        <button class="button button-dark" type="submit">Log in <span aria-hidden="true">↗</span></button>
+        <p class="form-note"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+        <p class="form-note">New to NourishLoop? <a href="{% url 'signup' %}">Create an account</a></p>
+    </form>
+</section>
+{% endblock %}

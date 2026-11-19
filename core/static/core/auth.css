@@ -1,0 +1,28 @@
+.auth-page{position:relative;max-width:1220px;min-height:650px;align-items:stretch;padding-top:68px;padding-bottom:80px}
+.auth-page .form-intro{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:center;min-height:430px;padding:clamp(28px,5vw,58px);border-radius:5px;background:#174a3b;color:#fff}
+.auth-page .form-intro:before{content:"";position:absolute;z-index:-1;right:-60px;bottom:-75px;width:280px;height:250px;background:#b8d949;clip-path:polygon(0 28%,70% 0,100% 69%,35% 100%);opacity:.95}
+.auth-page .form-intro:after{content:"";position:absolute;z-index:-1;right:35px;bottom:40px;width:105px;height:118px;background:#df7257;clip-path:polygon(50% 0,100% 24%,78% 100%,15% 82%,0 28%);transform:rotate(13deg)}
+.auth-page .form-intro .eyebrow{color:#d7ee8b}
+.auth-page .form-intro h1{max-width:460px;margin:17px 0;font-size:clamp(38px,5vw,60px);color:#fff}
+.auth-page .form-intro p{max-width:380px;color:#e0e9df;font-size:16px}
+.auth-page .form-panel{align-self:center;border:1px solid #e8c5b4;border-top:4px solid #df7257;border-radius:5px;background:linear-gradient(145deg,#f6e2d6 0%,#f9eee6 100%);box-shadow:0 22px 55px rgba(32,53,46,.12)}
+.auth-page .field input,.auth-page .field select,.auth-page .field textarea{border-color:#c3d0b9;background:#fbfcf8}
+.auth-page .field input:focus,.auth-page .field select:focus,.auth-page .field textarea:focus{outline:2px solid #b8d949;border-color:#78924e;box-shadow:0 0 0 4px rgba(184,217,73,.18)}
+.auth-page .button-dark{background:#174a3b;box-shadow:inset -4px 0 #df7257;transition:background .18s ease,transform .18s ease}
+.auth-page .button-dark:hover{background:#24644d;transform:translateY(-1px)}
+.auth-page .form-note a{color:#a84935}
+.auth-page .form-errors,.auth-page .error{color:#a84935}
+.signup-page{grid-template-columns:.86fr 1.14fr;gap:46px}
+.login-page{grid-template-columns:1fr 1fr;gap:46px}
+.logout-page{max-width:1120px;min-height:570px;margin:0 auto;padding:70px 28px;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(35px,8vw,100px);align-items:center}
+.logout-art{position:relative;display:grid;place-items:center;min-height:360px;overflow:hidden;border-radius:5px;background:#174a3b}
+.logout-orbit{position:absolute;width:230px;height:230px;border-radius:50%;border:1px solid rgba(255,255,255,.28)}
+.orbit-one{width:285px;height:285px;border-color:#b8d949}
+.orbit-two{width:195px;height:195px;border-color:#df7257}
+.logout-center{display:grid;place-items:center;width:108px;height:108px;border-radius:50% 50% 50% 8px;background:#b8d949;color:#174a3b;font:800 52px 'Manrope',sans-serif;transform:rotate(-8deg)}
+.logout-copy h1{max-width:520px;margin:14px 0;font:800 clamp(36px,5vw,58px)/1.08 'Manrope',sans-serif;color:#20352e}
+.logout-copy>p{max-width:440px;color:#64736c;font-size:16px}
+.logout-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:27px}
+.logout-actions .button-dark{background:#174a3b;box-shadow:inset -4px 0 #df7257}
+@media(max-width:760px){.logout-page{min-height:0;padding:40px 22px 65px;grid-template-columns:1fr;gap:28px}.logout-art{min-height:230px}.logout-copy h1{font-size:40px}}
+@media(max-width:760px){.auth-page{min-height:0;padding-top:38px;padding-bottom:56px;gap:20px}.auth-page .form-intro{min-height:250px;padding:28px}.auth-page .form-intro h1{font-size:40px}.auth-page .form-panel{width:100%}.signup-page,.login-page{grid-template-columns:1fr}}

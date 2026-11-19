@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NourishLoop - Share Food, Spread Hope</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7faf7;
+            color: #26352b;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px #ddd;
+        }
+
+        .logo {
+            color: #23834b;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 22px;
+            font-weight: bold;
+        }
+
+        .hero {
+            padding: 100px 10%;
+            text-align: center;
+            background: #e5f4e9;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            color: #176b39;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 19px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 25px 8px 0;
+            padding: 14px 28px;
+            background: #23834b;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #176b39;
+        }
+
+        .section {
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 35px;
+            color: #176b39;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 280px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px #ddd;
+        }
+
+        .card h3 {
+            color: #23834b;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #176b39;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">NourishLoop</div>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="/admin/">Admin</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Share Food, Spread Hope!</h1>
+
+        <p>
+            NourishLoop connects food donors, NGOs,
+            community kitchens and volunteers to reduce
+            food waste and help people in need.
+            Every meal shared makes a difference.
+        </p>
+
+        <a href="#services" class="btn">Explore NourishLoop</a>
+        <a href="/admin/" class="btn">Admin Login</a>
+    </section>
+
+    <section class="section" id="about">
+        <h2>About NourishLoop</h2>
+
+        <p>
+            Our mission is to reduce food wastage by
+            connecting people and organizations that
+            have surplus food with communities that need it.
+        </p>
+    </section>
+
+    <section class="section" id="services">
+        <h2>What We Do</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Food Donation</h3>
+                <p>
+                    Restaurants, colleges and individuals
+                    can share their surplus food.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Request Food</h3>
+                <p>
+                    NGOs and community kitchens can
+                    request available food donations.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Volunteer</h3>
+                <p>
+                    Volunteers can help collect and
+                    deliver donated food.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 NourishLoop | Share Food, Spread Hope</p>
+    </footer>
+
+</body>
+</html>

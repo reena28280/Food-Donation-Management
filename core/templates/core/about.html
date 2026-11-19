@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About NourishLoop | Food, shared well{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'core/pages.css' %}">{% endblock %}
+{% block content %}
+<section class="info-hero about-hero">
+    <div class="container info-hero-grid">
+        <div><span class="page-kicker">About NourishLoop</span><h1>Good food is too valuable to go to waste.</h1><p>We connect surplus food with the people and community organizations who can use it, through a local network built around care, safety, and clear handoffs.</p><a class="btn page-primary" href="{% url 'how_it_works' %}">See how it works <span aria-hidden="true">↗</span></a></div>
+        <div class="info-hero-image"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=85" alt="A colorful meal prepared with fresh produce"><span>Share more.<br>Waste less.</span></div>
+    </div>
+</section>
+<section class="about-problem"><div class="container problem-grid">
+    <div class="problem-index">01 <span>THE CHALLENGE</span></div>
+    <div class="problem-copy"><h2>A disconnect between surplus and need.</h2><p>Restaurants, campuses, events, and households can have safe, edible food left over. At the same time, community kitchens and local organizations work to provide meals. Without a simple way to coordinate timing, quantity, and collection, good food can be wasted instead of shared.</p><p>NourishLoop focuses on that missing connection: making offers visible, requests manageable, and pickups coordinated among the people involved.</p></div>
+</div></section>
+<section class="purpose-section"><div class="container"><div class="purpose-heading"><span class="page-kicker">Our purpose</span><h2>A practical loop with people at its center.</h2></div><div class="row g-4">
+    <div class="col-md-4"><article class="purpose-card"><span>02 / OBJECTIVE</span><h3>Make sharing workable.</h3><p>Provide one place to list surplus food, find suitable offers, reserve servings, and coordinate collection with clear responsibilities.</p></article></div>
+    <div class="col-md-4"><article class="purpose-card purpose-card-highlight"><span>03 / MISSION</span><h3>Move good food to good use.</h3><p>Help donors, receivers, and volunteers work together so available food can reach local communities safely and on time.</p></article></div>
+    <div class="col-md-4"><article class="purpose-card"><span>04 / VISION</span><h3>A more thoughtful food system.</h3><p>Imagine communities where sharing surplus is a normal, trusted part of how food moves, and less edible food is needlessly discarded.</p></article></div>
+</div></div></section>
+<section class="page-cta"><div class="container page-cta-inner"><div><span class="page-kicker">Be part of the change</span><h2>Every good handoff starts with a connection.</h2></div><div class="d-flex flex-wrap gap-3"><a class="btn page-primary" href="{% url 'signup' %}">Join NourishLoop</a><a class="btn page-secondary" href="{% url 'donation_list' %}">Find food</a></div></div></section>
+{% endblock %}

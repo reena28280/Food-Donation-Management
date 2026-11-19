@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Delivery board | NourishLoop{% endblock %}
+{% block content %}
+<section class="page-shell">
+    <div class="page-heading"><span class="eyebrow">Volunteer workspace · {{ user_city }}</span><h1>Move good food forward.</h1><p>Claim an accepted pickup, keep its status current, and close the loop with both parties.</p></div>
+    <div class="board-section">
+        <div class="section-heading"><h2>Ready to claim</h2><span>{{ available|length }} open</span></div>
+        {% if available %}<div class="request-list">{% for food_request in available %}
+            <article class="request-card"><div class="request-main"><span class="status-pill status-accepted">Donor approved</span><h2><a href="{% url 'donation_detail' food_request.donation.pk %}">{{ food_request.donation.title }}</a></h2><p>{{ food_request.requested_servings }} servings · {{ food_request.donation.city }} · pickup by {{ food_request.donation.pickup_deadline|date:'M j, g:i A' }}</p><p>Exact pickup details become available after you claim this delivery.</p><span class="request-date">Donor: {{ food_request.donation.donor.get_full_name|default:food_request.donation.donor.username }} · Receiver: {{ food_request.receiver.get_full_name|default:food_request.receiver.username }}</span></div><div class="request-actions"><form method="post" action="{% url 'claim_delivery' food_request.pk %}">{% csrf_token %}<button class="button button-dark" type="submit">Claim delivery</button></form></div></article>
+        {% endfor %}</div>{% else %}<div class="empty-state">No approved deliveries are waiting for a volunteer.</div>{% endif %}
+    </div>
+    <div class="board-section">
+        <div class="section-heading"><h2>Your deliveries</h2><span>{{ assignments|length }} assigned</span></div>
+        {% if assignments %}<div class="request-list">{% for assignment in assignments %}
+            <article class="request-card"><div class="request-main"><span class="status-pill status-{{ assignment.status|lower }}">{{ assignment.get_status_display }}</span><h2><a href="{% url 'donation_detail' assignment.request.donation.pk %}">{{ assignment.request.donation.title }}</a></h2><p>{{ assignment.request.requested_servings }} servings · {{ assignment.request.donation.city }}</p>{% if assignment.status != 'CANCELLED' %}<p>{{ assignment.request.donation.pickup_address }}</p>{% endif %}</div><div class="request-actions">{% if assignment.status == 'ASSIGNED' %}<form method="post" action="{% url 'update_delivery' assignment.pk 'PICKED_UP' %}">{% csrf_token %}<button class="button button-dark" type="submit">Mark picked up</button></form>{% elif assignment.status == 'PICKED_UP' %}<form method="post" action="{% url 'update_delivery' assignment.pk 'DELIVERED' %}">{% csrf_token %}<button class="button button-dark" type="submit">Mark delivered</button></form>{% elif assignment.status == 'DELIVERED' %}<span class="inline-callout">Waiting for donor and receiver confirmation.</span>{% endif %}</div></article>
+        {% endfor %}</div>{% else %}<div class="empty-state">You haven't claimed a delivery yet.</div>{% endif %}
+    </div>
+</section>
+{% endblock %}

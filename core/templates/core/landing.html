@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NourishLoop | Rescue food. Share hope.{% endblock %}
+{% block body_class %}home-body{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'core/home.css' %}?v=2">
+{% endblock %}
+{% block content %}
+<header class="home-nav-wrap">
+	<nav class="navbar navbar-expand-lg home-navbar" aria-label="Main navigation">
+		<div class="container">
+			<a class="navbar-brand home-brand" href="{% url 'home' %}"><span class="brand-symbol">N</span><span>Nourish<span>Loop</span></span></a>
+			<button class="navbar-toggler home-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#homeNavigation" aria-controls="homeNavigation" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+			<div class="collapse navbar-collapse" id="homeNavigation">
+				<ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+					<li class="nav-item"><a class="nav-link active" href="{% url 'home' %}" aria-current="page">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'how_it_works' %}">How It Works</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'donation_list' %}">Find Food</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+					{% if user.is_authenticated %}
+						{% if user.is_staff or user.is_superuser %}<li class="nav-item"><a class="nav-link" href="{% url 'staff_dashboard' %}">Staff dashboard</a></li>{% endif %}
+						<li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+						<li class="nav-item"><form method="post" action="{% url 'logout' %}" class="m-0">{% csrf_token %}<button class="nav-link nav-logout" type="submit">Log out</button></form></li>
+					{% else %}
+						<li class="nav-item"><a class="nav-link nav-login" href="{% url 'login' %}">Login</a></li>
+						<li class="nav-item"><a class="btn home-register" href="{% url 'signup' %}">Register <span aria-hidden="true">↗</span></a></li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<section class="home-hero" aria-labelledby="hero-title">
+	<div class="container home-hero-grid">
+		<div class="hero-copy">
+			<span class="section-kicker"><span class="kicker-line"></span> The food rescue network</span>
+			<h1 id="hero-title">Rescue Food.<br><em>Share Hope.</em><br>Reduce Waste.</h1>
+			<p class="hero-lede">Good food deserves a good next stop. NourishLoop brings food donors, local organizations, and volunteers together to get surplus meals where they matter.</p>
+			<div class="hero-actions"><a class="btn btn-rescue" href="{% url 'donation_create' %}">Donate Food <span aria-hidden="true">↗</span></a><a class="btn btn-discover" href="{% url 'donation_list' %}"><span class="play-mark" aria-hidden="true">⌕</span> Find Food</a></div>
+			<div class="hero-trust"><span class="trust-mark" aria-hidden="true">✓</span><span>Local food. Real people. Less waste.</span></div>
+		</div>
+		<div class="hero-image-area"><div class="hero-image-frame"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1400&q=85" alt="Fresh colorful food ready to share"></div><div class="hero-image-label"><span class="label-leaf" aria-hidden="true">✳</span><span><strong>Good food, shared well</strong><small>Every serving finds a new purpose</small></span></div><div class="hero-side-note">FROM SURPLUS<br>TO SUSTENANCE</div></div>
+	</div>
+	<div class="container impact-wrap"><div class="impact-strip" aria-label="NourishLoop live impact statistics">
+		<div class="impact-item"><span class="impact-number">{{ stats.listing_count|default:0 }}</span><span class="impact-label">Food listings available</span></div>
+		<div class="impact-item"><span class="impact-number">{{ stats.servings|default:0 }}</span><span class="impact-label">Servings ready to share</span></div>
+		<div class="impact-item"><span class="impact-number">{{ completed_servings }}</span><span class="impact-label">Servings delivered</span></div>
+		<div class="impact-item"><span class="impact-number">{{ approved_partners }}</span><span class="impact-label">Approved community partners</span></div>
+	</div></div>
+</section>
+
+<section class="how-section" id="how-it-works" aria-labelledby="how-title"><div class="container">
+	<div class="section-heading home-section-heading"><span class="section-kicker">A simple loop, a real difference</span><h2 id="how-title">Four steps. One better food system.</h2><p>From a surplus meal to a community table, we help every handoff happen with care.</p></div>
+	<div class="steps-grid">
+		<article class="step-item"><span class="step-index">01</span><div class="step-icon step-icon-green" aria-hidden="true">↗</div><h3>Donate</h3><p>Share surplus food with clear servings, ingredients, and a safe pickup window.</p><a href="{% url 'donation_create' %}">Offer food <span aria-hidden="true">→</span></a></article>
+		<article class="step-item"><span class="step-index">02</span><div class="step-icon step-icon-cream" aria-hidden="true">⌕</div><h3>Discover</h3><p>Browse available donations by food type, city, and what your community needs.</p><a href="{% url 'donation_list' %}">Explore food <span aria-hidden="true">→</span></a></article>
+		<article class="step-item"><span class="step-index">03</span><div class="step-icon step-icon-coral" aria-hidden="true">♡</div><h3>Request</h3><p>Reserve the servings you need and coordinate a timely collection.</p><a href="{% url 'signup' %}">Join as a receiver <span aria-hidden="true">→</span></a></article>
+		<article class="step-item"><span class="step-index">04</span><div class="step-icon step-icon-green" aria-hidden="true">✓</div><h3>Collect</h3><p>A volunteer delivers the food. Donor and receiver confirm the handoff.</p><a href="{% url 'signup' %}">Become a volunteer <span aria-hidden="true">→</span></a></article>
+	</div>
+</div></section>
+
+<section class="partners-section" aria-labelledby="partners-title"><div class="container partners-layout">
+	<div class="partners-intro"><span class="section-kicker">Good food comes from everywhere</span><h2 id="partners-title">A community effort, from source to table.</h2><p>Whether you have food to share or neighbors to serve, there’s a place for you in the loop.</p></div>
+	<div class="partner-types">
+		<div class="partner-type"><span class="partner-icon" aria-hidden="true">01</span><span><strong>Restaurants &amp; hotels</strong><small>Share safely prepared surplus meals</small></span></div>
+		<div class="partner-type"><span class="partner-icon" aria-hidden="true">02</span><span><strong>Colleges &amp; campuses</strong><small>Connect dining halls and hostels</small></span></div>
+		<div class="partner-type"><span class="partner-icon" aria-hidden="true">03</span><span><strong>NGOs &amp; community kitchens</strong><small>Request food for local programs</small></span></div>
+		<div class="partner-type"><span class="partner-icon" aria-hidden="true">04</span><span><strong>Neighbors &amp; volunteers</strong><small>Share, collect, and deliver together</small></span></div>
+	</div>
+</div></section>
+
+<section class="featured-section" id="find-food" aria-labelledby="featured-title"><div class="container">
+	<div class="section-heading featured-heading"><div><span class="section-kicker">Fresh opportunities to help</span><h2 id="featured-title">Food shared nearby.</h2><p>Browse current donations and find the next good meal for your community.</p></div><a class="btn btn-outline-forest" href="{% url 'donation_list' %}">See all food <span aria-hidden="true">↗</span></a></div>
+	{% if recent_donations %}<div class="row g-4 featured-grid">
+		{% for donation in recent_donations %}<div class="col-md-6 col-lg-4"><article class="food-feature">
+			{% if donation.image %}<img class="food-feature-image" src="{{ donation.image.url }}" alt="{{ donation.title }}">{% else %}<img class="food-feature-image" src="{% cycle 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80' 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80' 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80' %}" alt="Fresh food donation">{% endif %}
+			<div class="food-feature-body"><div class="food-feature-meta"><span>{{ donation.get_food_type_display }}</span><span>{{ donation.city }}</span></div><h3><a href="{% url 'donation_detail' donation.pk %}">{{ donation.title }}</a></h3><p>{{ donation.description|truncatewords:16 }}</p><div class="food-feature-bottom"><span><strong>{{ donation.remaining_servings }}</strong> servings</span><span>Pickup by {{ donation.pickup_deadline|date:'M j, g:i A' }}</span></div><a class="food-feature-link" href="{% url 'donation_detail' donation.pk %}">View food details <span aria-hidden="true">↗</span></a></div>
+		</article></div>{% endfor %}
+	</div>{% else %}<div class="no-featured"><span class="no-featured-mark" aria-hidden="true">✳</span><div><h3>New food listings are on their way.</h3><p>Be the first to share a meal with your community.</p></div><a class="btn btn-rescue" href="{% url 'donation_create' %}">Donate Food <span aria-hidden="true">↗</span></a></div>{% endif %}
+</div></section>
+
+<section class="about-section" id="about" aria-labelledby="about-title"><div class="container about-layout">
+	<div class="about-photo"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=85" alt="A nourishing meal made with fresh ingredients"><span class="about-photo-caption">A little less waste.<br>A lot more care.</span></div>
+	<div class="about-copy"><span class="section-kicker">Why NourishLoop</span><h2 id="about-title">Good food should feed people, not landfills.</h2><p>Every day, perfectly good food goes unused while communities need nourishing meals. NourishLoop brings the people with surplus together with organizations and neighbors who can put it to good use.</p><p>We make the exchange clear and coordinated: donors share details, receivers reserve what they need, and volunteers help food reach its next table.</p><div class="about-proof"><span class="proof-check" aria-hidden="true">✓</span><span><strong>{{ completed_servings }} servings delivered</strong><small>Counted from completed NourishLoop handoffs</small></span></div></div>
+</div></section>
+
+<section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="container contact-band"><div><span class="section-kicker">Join the food loop</span><h2 id="contact-title">Have good food to share?</h2><p>Help make sure a surplus meal finds the people who need it.</p></div><div class="contact-actions"><a class="btn btn-rescue" href="{% url 'donation_create' %}">Donate Food <span aria-hidden="true">↗</span></a><a class="contact-register" href="{% url 'signup' %}">Create an account <span aria-hidden="true">→</span></a></div></div></section>
+
+<footer class="home-footer"><div class="container"><div class="footer-main">
+	<div class="footer-about"><a class="home-brand footer-logo" href="{% url 'home' %}"><span class="brand-symbol">N</span><span>Nourish<span>Loop</span></span></a><p>Rescue food. Share hope. Reduce waste.<br>A better food loop starts with us.</p></div>
+	<div class="footer-links"><strong>Explore</strong><a href="{% url 'home' %}">Home</a><a href="{% url 'about' %}">About</a><a href="{% url 'how_it_works' %}">How it works</a><a href="{% url 'donation_list' %}">Find food</a></div>
+	<div class="footer-links"><strong>Get involved</strong><a href="{% url 'donation_create' %}">Donate food</a><a href="{% url 'signup' %}">Become a receiver</a><a href="{% url 'signup' %}">Volunteer</a><a href="{% url 'login' %}">Login</a></div>
+	<div class="footer-contact"><strong>Let’s make a difference</strong><p>Join neighbors, food providers, and community organizations building a more thoughtful food system.</p><a href="{% url 'contact' %}">Contact us <span aria-hidden="true">↗</span></a></div>
+</div><div class="footer-bottom"><span>© 2026 NourishLoop</span><span>Good food deserves a good next stop.</span><a href="#homeNavigation">Back to top ↑</a></div></div></footer>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Reports | NourishLoop{% endblock %}
+{% block content %}
+<section class="page-shell staff-shell"><div class="page-heading staff-heading"><div><span class="eyebrow">Impact and activity</span><h1>Reports</h1><p>Summary counts and monthly donation and collection activity.</p></div><a class="button button-dark" href="{% url 'staff_reports_csv' %}">Download CSV <span aria-hidden="true">↓</span></a></div>
+    <div class="dashboard-stats staff-stats"><div><strong>{{ stats.donations }}</strong><span>Total donations</span></div><div><strong>{{ stats.completed_collections }}</strong><span>Completed collections</span></div><div><strong>{{ stats.meals_donated }}</strong><span>Servings listed</span></div><div><strong>{{ stats.total_users }}</strong><span>Member accounts</span></div></div>
+    <section class="staff-section"><div class="dashboard-section-heading"><div><h2>Monthly activity</h2><p>Monthly donated servings and completed collections.</p></div></div>
+        {% if monthly_activity %}<div class="staff-table-wrap"><table class="staff-table"><thead><tr><th>Month</th><th>Donations</th><th>Servings listed</th><th>Completed collections</th><th>Servings collected</th></tr></thead><tbody>{% for row in monthly_activity %}<tr><td><strong>{{ row.month|date:'F Y' }}</strong></td><td>{{ row.donations }}</td><td>{{ row.meals_donated }}</td><td>{{ row.completed_collections }}</td><td>{{ row.meals_collected }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No donation or collection activity has been recorded yet.</div>{% endif %}
+    </section><a class="text-link staff-back" href="{% url 'staff_dashboard' %}">← Back to staff dashboard</a>
+</section>
+{% endblock %}

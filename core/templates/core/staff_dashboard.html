@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Staff Dashboard | NourishLoop{% endblock %}
+{% block content %}
+<section class="page-shell staff-shell">
+    <div class="page-heading staff-heading"><div><span class="eyebrow">NourishLoop operations</span><h1>Staff dashboard</h1><p>Platform overview, verification queue, and management tools.</p></div><a class="button button-dark" href="{% url 'staff_reports' %}">View reports</a></div>
+    <div class="dashboard-stats staff-stats">
+        <div><strong>{{ stats.total_users }}</strong><span>Member accounts</span></div>
+        <div><strong>{{ stats.donors }}</strong><span>Donors</span></div>
+        <div><strong>{{ stats.receivers }}</strong><span>Receivers</span></div>
+        <div><strong>{{ stats.volunteers }}</strong><span>Volunteers</span></div>
+        <div><strong>{{ stats.donations }}</strong><span>Total donations</span></div>
+        <div><strong>{{ stats.requests }}</strong><span>Total requests</span></div>
+        <div><strong>{{ stats.completed_collections }}</strong><span>Completed collections</span></div>
+        <div><strong>{{ stats.meals_donated }}</strong><span>Servings listed</span></div>
+    </div>
+    <section class="staff-section"><div class="dashboard-section-heading"><div><h2>Organization verification</h2><p>Pending donor and receiver profiles</p></div><a class="text-link" href="{% url 'staff_verification' %}">View all pending →</a></div>
+        {% if pending_profiles %}<div class="staff-table-wrap"><table class="staff-table"><thead><tr><th>Organization / member</th><th>Role</th><th>Type</th><th>City</th><th>Submitted</th><th>Review</th></tr></thead><tbody>
+        {% for profile in pending_profiles %}<tr><td><strong>{{ profile.organization_name|default:profile.user.get_full_name|default:profile.user.username }}</strong><small>{{ profile.user.email }}</small></td><td>{{ profile.get_role_display }}</td><td>{{ profile.get_organization_type_display }}</td><td>{{ profile.city }}</td><td>{{ profile.created_at|date:'M j, Y' }}</td><td><div class="staff-row-actions"><form method="post" action="{% url 'staff_verify_profile' profile.pk 'approve' %}">{% csrf_token %}<button class="button button-dark" type="submit">Approve</button></form><form method="post" action="{% url 'staff_verify_profile' profile.pk 'reject' %}">{% csrf_token %}<button class="button button-outline" type="submit">Reject</button></form></div></td></tr>{% endfor %}
+        </tbody></table></div>{% else %}<div class="empty-state">No donor or receiver profiles are waiting for review.</div>{% endif %}
+    </section>
+    <section class="staff-section"><div class="dashboard-section-heading"><div><h2>Manage NourishLoop</h2><p>Open the existing Django admin lists.</p></div></div><div class="staff-management-links">
+        <a href="{% url 'admin:auth_user_changelist' %}"><strong>Users</strong><span>Accounts and access</span></a>
+        <a href="{% url 'admin:accounts_profile_changelist' %}"><strong>Profiles</strong><span>Roles and verification</span></a>
+        <a href="{% url 'admin:donations_foodcategory_changelist' %}"><strong>Food categories</strong><span>Listing categories</span></a>
+        <a href="{% url 'admin:donations_fooddonation_changelist' %}"><strong>Donations</strong><span>Food listings and status</span></a>
+        <a href="{% url 'admin:foodrequests_donationrequest_changelist' %}"><strong>Requests</strong><span>Reservations and outcomes</span></a>
+        <a href="{% url 'admin:logistics_volunteerassignment_changelist' %}"><strong>Delivery assignments</strong><span>Volunteer task status</span></a>
+        <a href="{% url 'admin:logistics_collectionrecord_changelist' %}"><strong>Collections</strong><span>Handoff confirmations</span></a>
+    </div></section>
+</section>
+{% endblock %}
